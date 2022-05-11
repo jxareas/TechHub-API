@@ -17,7 +17,7 @@ public class Role implements BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idRole;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 30, nullable = false)
     private String name;
 
     private boolean enabled;

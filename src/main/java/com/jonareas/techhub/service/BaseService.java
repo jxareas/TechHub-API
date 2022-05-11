@@ -11,9 +11,9 @@ public interface BaseService<T extends BaseEntity, ID extends Serializable> {
 
     T update(T entity) throws Exception;
 
-    List<T> readAll() throws Exception;
+    List<T> getAll() throws Exception;
 
-    T readById(ID id) throws Exception;
+    T getById(ID id) throws Exception;
 
     void delete(ID id) throws Exception;
 

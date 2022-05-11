@@ -39,7 +39,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializa
 
     @Override
     @Transactional
-    public List<T> readAll() throws Exception {
+    public List<T> getAll() throws Exception {
         try {
             return repository.findAll();
         } catch (Exception e) {
@@ -49,7 +49,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializa
 
     @Override
     @Transactional
-    public T readById(ID id) throws Exception {
+    public T getById(ID id) throws Exception {
         try {
          return repository.findById(id).orElse(null);
         } catch (Exception e) {

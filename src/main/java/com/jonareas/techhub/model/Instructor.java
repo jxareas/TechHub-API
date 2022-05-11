@@ -17,10 +17,13 @@ public class Instructor implements BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idInstructor;
 
+    @Column(length = 80, nullable = false)
     private String fullName;
 
-    private Boolean isMale;
+    @Column(nullable = false)
+    private Boolean male;
 
-    private String photoUrl;
+    @Column(nullable = false)
+    private String photoPath;
 
 }
