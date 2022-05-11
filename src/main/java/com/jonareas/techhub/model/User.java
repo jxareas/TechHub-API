@@ -26,9 +26,13 @@ public class User implements BaseEntity {
     @Column(length = 50, nullable = false)
     private String username;
 
+    @Column(length = 50, nullable = false)
+    private String email;
+
     @Column(length = 60, nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private boolean enabled;
 
     @ManyToMany(cascade = CascadeType.REFRESH)

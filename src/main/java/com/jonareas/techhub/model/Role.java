@@ -20,5 +20,6 @@ public class Role implements BaseEntity {
     @Column(length = 30, nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private boolean enabled;
 }

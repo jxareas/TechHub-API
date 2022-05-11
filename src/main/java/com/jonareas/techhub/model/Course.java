@@ -11,22 +11,28 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "courses")
-public class Course implements BaseEntity{
+public class Course implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCourse;
 
+    @Column(length = 50, nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
     private String imageUrl;
 
+    @Column(length = 150, nullable = false)
     private String imageContentDesc;
 
+    @Column(nullable = false)
     private Integer steps;
 
+    @Column(nullable = false)
     private Integer step;
 
     @ManyToOne(cascade = CascadeType.ALL)

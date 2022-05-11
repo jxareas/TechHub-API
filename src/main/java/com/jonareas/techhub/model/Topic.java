@@ -17,10 +17,13 @@ public class Topic implements BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idTopic;
 
+    @Column(length = 50, nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private Integer totalCourses;
 
+    @Column(nullable = false)
     private String imageUrl;
 
 
