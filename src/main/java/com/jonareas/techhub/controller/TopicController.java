@@ -1,9 +1,9 @@
 package com.jonareas.techhub.controller;
 
-import com.jonareas.techhub.dto.RoleDto;
+import com.jonareas.techhub.dto.TopicDto;
 import com.jonareas.techhub.exceptions.ModelNotFoundException;
-import com.jonareas.techhub.model.Role;
-import com.jonareas.techhub.service.RoleService;
+import com.jonareas.techhub.model.Topic;
+import com.jonareas.techhub.service.TopicService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,66 +17,66 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/roles")
-public class RoleController implements BaseController<RoleDto, Long> {
+@RequestMapping("/topics")
+public class TopicController implements BaseController<TopicDto ,Long> {
 
-    private final RoleService service;
+    private final TopicService service;
     private final ModelMapper mapper;
 
     @Autowired
-    RoleController(RoleService service, ModelMapper mapper) {
+    TopicController(TopicService service, ModelMapper mapper) {
         this.service = service;
         this.mapper = mapper;
     }
 
     @Override
     @GetMapping
-    public ResponseEntity<List<RoleDto>> getAll() throws Exception {
-        List<RoleDto> roles = service.getAll()
+    public ResponseEntity<List<TopicDto>> getAll() throws Exception {
+        List<TopicDto> topics = service.getAll()
                 .stream()
-                .map(role ->
-                        mapper.map(role, RoleDto.class))
+                .map(topic ->
+                        mapper.map(topic, TopicDto.class))
                 .collect(toList());
 
-        return ResponseEntity.ok(roles);
+        return ResponseEntity.ok(topics);
     }
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<RoleDto> getById(@PathVariable("id") Long id) throws Exception {
-        Role role = service.getById(id);
-        if(role == null) {
+    public ResponseEntity<TopicDto> getById(@PathVariable("id") Long id) throws Exception {
+        Topic topic = service.getById(id);
+        if(topic == null) {
             throw new ModelNotFoundException(ModelNotFoundException.identifierNotFoundMessage(id));
         }
-        RoleDto topicDto = mapper.map(role, RoleDto.class);
+        TopicDto topicDto = mapper.map(topic, TopicDto.class);
         return ResponseEntity.ok(topicDto);
     }
 
     @Override
     @PostMapping
-    public ResponseEntity<RoleDto> create(@Valid @RequestBody RoleDto dto) throws Exception {
-    Role role = service.create(mapper.map(dto, Role.class));
-    RoleDto topicDto = mapper.map(role, RoleDto.class);
-    return new ResponseEntity<>(topicDto, HttpStatus.CREATED);
+    public ResponseEntity<TopicDto> create(@Valid @RequestBody TopicDto dto) throws Exception {
+        Topic topic = service.create(mapper.map(dto, Topic.class));
+        TopicDto topicDto = mapper.map(topic, TopicDto.class);
+        return new ResponseEntity<>(topicDto, HttpStatus.CREATED);
     }
 
     @Override
     @PutMapping
-    public ResponseEntity<RoleDto> update(@Valid @RequestBody RoleDto dto) throws Exception {
-        Role role = service.getById(dto.getId());
-        if(role == null) {
+    public ResponseEntity<TopicDto> update(@Valid @RequestBody TopicDto dto) throws Exception {
+        Topic topic = service.getById(dto.getId());
+        if(topic == null) {
             throw new ModelNotFoundException(ModelNotFoundException.identifierNotFoundMessage(dto.getId()));
         }
-        Role newTopic = service.update(mapper.map(dto, Role.class));
-        RoleDto topicDto = mapper.map(newTopic, RoleDto.class);
+        Topic newTopic = service.update(mapper.map(dto, Topic.class));
+        TopicDto topicDto = mapper.map(newTopic, TopicDto.class);
         return new ResponseEntity<>(topicDto, HttpStatus.OK);
     }
 
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable("id") Long id) throws Exception {
-        Role role = service.getById(id);
-        if(role == null) {
+        Topic topic = service.getById(id);
+        if(topic == null) {
             throw new ModelNotFoundException(ModelNotFoundException.identifierNotFoundMessage(id));
         }
         service.delete(id);

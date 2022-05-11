@@ -47,7 +47,7 @@ public class UserController implements BaseController<UserDto, Long> {
     public ResponseEntity<UserDto> getById(@PathVariable("id") Long id) throws Exception {
         User user = service.getById(id);
         if(user == null) {
-            throw new ModelNotFoundException("ID NOT FOUND: " + id);
+            throw new ModelNotFoundException(ModelNotFoundException.identifierNotFoundMessage(id));
         }
         UserDto instructorDto = mapper.map(user, UserDto.class);
         return ResponseEntity.ok(instructorDto);
@@ -66,7 +66,7 @@ public class UserController implements BaseController<UserDto, Long> {
     public ResponseEntity<UserDto> update(@Valid @RequestBody UserDto dto) throws Exception {
         User user = service.getById(dto.getId());
         if(user == null) {
-            throw new ModelNotFoundException("ID NOT FOUND: " + dto.getId());
+            throw new ModelNotFoundException(ModelNotFoundException.identifierNotFoundMessage(dto.getId()));
         }
         User newInstructor = service.update(mapper.map(dto, User.class));
         UserDto instructorDto = mapper.map(newInstructor, UserDto.class);
@@ -78,7 +78,7 @@ public class UserController implements BaseController<UserDto, Long> {
     public ResponseEntity<Void> deleteById(@PathVariable("id") Long id) throws Exception {
         User user = service.getById(id);
         if(user == null) {
-            throw new ModelNotFoundException("ID NOT FOUND: " + id);
+            throw new ModelNotFoundException(ModelNotFoundException.identifierNotFoundMessage(id));
         }
         service.delete(id);
         return ResponseEntity.noContent().build();

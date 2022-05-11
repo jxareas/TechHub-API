@@ -46,7 +46,7 @@ public class InstructorController implements BaseController<InstructorDto, Long>
     public ResponseEntity<InstructorDto> getById(@PathVariable("id") Long id) throws Exception {
         Instructor instructor = service.getById(id);
         if(instructor == null) {
-            throw new ModelNotFoundException("ID NOT FOUND: " + id);
+            throw new ModelNotFoundException(ModelNotFoundException.identifierNotFoundMessage(id));
         }
         InstructorDto instructorDto = mapper.map(instructor, InstructorDto.class);
         return ResponseEntity.ok(instructorDto);
@@ -65,7 +65,7 @@ public class InstructorController implements BaseController<InstructorDto, Long>
     public ResponseEntity<InstructorDto> update(@Valid @RequestBody InstructorDto dto) throws Exception {
         Instructor instructor = service.getById(dto.getId());
         if(instructor == null) {
-            throw new ModelNotFoundException("ID NOT FOUND: " + dto.getId());
+            throw new ModelNotFoundException(ModelNotFoundException.identifierNotFoundMessage(dto.getId()));
         }
         Instructor newInstructor = service.update(mapper.map(dto, Instructor.class));
         InstructorDto instructorDto = mapper.map(newInstructor, InstructorDto.class);
@@ -77,7 +77,7 @@ public class InstructorController implements BaseController<InstructorDto, Long>
     public ResponseEntity<Void> deleteById(@PathVariable("id") Long id) throws Exception {
         Instructor instructor = service.getById(id);
         if(instructor == null) {
-            throw new ModelNotFoundException("ID NOT FOUND: " + id);
+            throw new ModelNotFoundException(ModelNotFoundException.identifierNotFoundMessage(id));
         }
         service.delete(id);
         return ResponseEntity.noContent().build();
