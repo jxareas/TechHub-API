@@ -1,7 +1,6 @@
 package com.jonareas.techhub.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class  CourseDto extends BaseDto  {
+public class CourseCreateDto extends BaseDto {
+
 
     @NotEmpty
     @NotNull
@@ -38,11 +38,11 @@ public class  CourseDto extends BaseDto  {
     @NotNull
     private Integer step;
 
-    @JsonIncludeProperties(value = {"fullName", "photoPath"})
-    private InstructorDto instructor;
+    @NotNull
+    private Long instructorId;
 
-    @JsonIncludeProperties(value = {"name"})
-    private TopicDto topic;
+    @NotNull
+    private Long topicId;
 
 
 }

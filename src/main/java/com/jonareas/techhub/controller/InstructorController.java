@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -59,6 +59,15 @@ public class InstructorController implements BaseController<InstructorDto, Long>
     InstructorDto instructorDto = mapper.map(instructor, InstructorDto.class);
     return new ResponseEntity<>(instructorDto, HttpStatus.CREATED);
     }
+
+    @PostMapping("/all")
+    public ResponseEntity<List<InstructorDto>> create(@RequestBody List<InstructorDto> dtos) throws Exception {
+        for(InstructorDto dto : dtos) {
+            create(dto);
+        }
+        return ResponseEntity.ok(dtos);
+    }
+
 
     @Override
     @PutMapping

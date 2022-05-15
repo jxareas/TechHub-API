@@ -1,5 +1,6 @@
 package com.jonareas.techhub.controller;
 
+import com.jonareas.techhub.dto.CourseCreateDto;
 import com.jonareas.techhub.dto.CourseDto;
 import com.jonareas.techhub.exceptions.ModelNotFoundException;
 import com.jonareas.techhub.model.Course;
@@ -18,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/courses")
-public class CourseController implements BaseController<CourseDto, Long> {
+public class CourseController  {
 
     private final CourseService service;
     private final ModelMapper mapper;
@@ -29,7 +30,7 @@ public class CourseController implements BaseController<CourseDto, Long> {
         this.mapper = mapper;
     }
 
-    @Override
+    
     @GetMapping
     public ResponseEntity<List<CourseDto>> getAll() throws Exception {
         List<CourseDto> courses = service.getAll()
@@ -41,7 +42,7 @@ public class CourseController implements BaseController<CourseDto, Long> {
         return ResponseEntity.ok(courses);
     }
 
-    @Override
+    
     @GetMapping("/{id}")
     public ResponseEntity<CourseDto> getById(@PathVariable("id") Long id) throws Exception {
         Course course = service.getById(id);
@@ -52,15 +53,23 @@ public class CourseController implements BaseController<CourseDto, Long> {
         return ResponseEntity.ok(courseDto);
     }
 
-    @Override
+
     @PostMapping
-    public ResponseEntity<CourseDto> create(@Valid @RequestBody CourseDto dto) throws Exception {
+    public ResponseEntity<CourseCreateDto> create(@Valid @RequestBody CourseCreateDto dto) throws Exception {
     Course course = service.create(mapper.map(dto, Course.class));
-    CourseDto courseDto = mapper.map(course, CourseDto.class);
+    CourseCreateDto courseDto = mapper.map(course, CourseCreateDto.class);
     return new ResponseEntity<>(courseDto, HttpStatus.CREATED);
     }
 
-    @Override
+    @PostMapping("/all")
+    public ResponseEntity<List<CourseCreateDto>> create(@RequestBody List<CourseCreateDto> dtos) throws Exception {
+        for(CourseCreateDto dto : dtos) {
+            create(dto);
+        }
+        return ResponseEntity.ok(dtos);
+    }
+
+    
     @PutMapping
     public ResponseEntity<CourseDto> update(@Valid @RequestBody CourseDto dto) throws Exception {
         Course course = service.getById(dto.getId());
@@ -72,7 +81,7 @@ public class CourseController implements BaseController<CourseDto, Long> {
         return new ResponseEntity<>(courseDto, HttpStatus.OK);
     }
 
-    @Override
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable("id") Long id) throws Exception {
         Course course = service.getById(id);

@@ -60,6 +60,14 @@ public class TopicController implements BaseController<TopicDto ,Long> {
         return new ResponseEntity<>(topicDto, HttpStatus.CREATED);
     }
 
+    @PostMapping("/all")
+    public ResponseEntity<List<TopicDto>> create(@RequestBody List<TopicDto> dtos) throws Exception {
+        for(TopicDto dto : dtos) {
+            create(dto);
+        }
+        return ResponseEntity.ok(dtos);
+    }
+
     @Override
     @PutMapping
     public ResponseEntity<TopicDto> update(@Valid @RequestBody TopicDto dto) throws Exception {

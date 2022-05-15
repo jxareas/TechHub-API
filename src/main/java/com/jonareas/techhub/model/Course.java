@@ -17,10 +17,10 @@ public class Course implements BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCourse;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 100, nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(length = 1500 ,nullable = false)
     private String description;
 
     @Column(nullable = false)
@@ -35,11 +35,11 @@ public class Course implements BaseEntity {
     @Column(nullable = false)
     private Integer step;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id", nullable = false)
     private Topic topic;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "fk_instructor")
     private Instructor instructor;
 
